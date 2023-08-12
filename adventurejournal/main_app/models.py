@@ -4,8 +4,12 @@ from datetime import date
 from django.contrib.auth.models import User
 
 
-class Campaign(models.Model):
-    name = models.CharField(max_length=30)
+class Photo(models.Model):
+  url = models.CharField(max_length=200)
+
+
+class System(models.Model):
+    name = models.CharField(max_length=20)
 
 
 class Monster(models.Model):
@@ -28,5 +32,18 @@ class Encounter(models.Model):
     name = models.CharField(max_length=20)
 
 
-class System(models.Model):
-    name = models.CharField(max_length=20)
+class Campaign(models.Model):
+    name = models.CharField(max_length=30)
+    system = models.ForeignKey(System, on_delete=models.CASCADE)
+    next_game = models.DateTimeField('Next Game', null=True)
+    players = models.ManyToManyField(PlayerCharacter)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    cover = models.ForeignKey(Photo, on_delete=models.CASCADE)
+    npcs = models.ManyToManyField(NPC, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name}"
+    
+    def get_absolute_url(self):
+        return reverse("campaign_detail", kwargs={"campaign_id": self.id})
+    
