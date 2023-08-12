@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Adventure Journal</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <nav>
+            <div class="nav-wrapper">
+                <ul>
+                    <li><a href="{% url 'home' %}" class="left brand-logo">&nbsp;&nbsp;Adventure Journal</a></li>
+                </ul>
+                <ul class="right">
+                  <li><a href="{% url 'about' %}">About</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'campaigns_create' %}">New Campaign</a></li>
+                        <li><a href="{% url 'campaignss_index' %}">My Campaigns</a></li>
+                        <li><a href="{% url 'monsters_create' %}">My Monsters</a></li>
+                        <li><a href="{% url 'items_index' %}">My Items</a></li>
+                        <li><a href="{% url 'logout' %}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{% url 'signup' %}">Sign Up</a></li>    
+                        <li><a href="{% url 'login' %}">Log In</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+  	<footer class="page-footer">
+       <div class="right">All Rights Reserved, &copy; 2023 Adventure Journal &nbsp;</div>
+    </footer>
+</body>
+</html>
