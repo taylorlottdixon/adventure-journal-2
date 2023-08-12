@@ -34,12 +34,12 @@ class Encounter(models.Model):
 
 class Campaign(models.Model):
     name = models.CharField(max_length=30)
-    system = models.ForeignKey(System, on_delete=models.CASCADE)
+    system = models.ForeignKey(System, on_delete=models.CASCADE, null=True)
     next_game = models.DateTimeField('Next Game', null=True)
     players = models.ManyToManyField(PlayerCharacter)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    cover = models.ForeignKey(Photo, on_delete=models.CASCADE)
-    npcs = models.ManyToManyField(NPC, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    cover = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
+    npcs = models.ManyToManyField(NPC)
 
     def __str__(self):
         return f"{self.name}"
