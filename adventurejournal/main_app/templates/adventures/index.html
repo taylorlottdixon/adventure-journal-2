@@ -1,6 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1></h1>
+<h1>My Campaigns</h1>
+
+<h2>Game Master Campaigns</h2>
+<div class="gm-games">
+    {% for campaign in my_campaigns %}
+        <div class="campaign-card">
+            <h3>{{ campaign.name }}</h3>
+            <p>{{ campaign.system }}</p>
+            <p>Next Game:</p>
+            <p>{{ campaign.next_game }}</p>
+            <p>Players</p>
+            <div class="player-pics">
+                {% for player in campaign.players %}
+                    {{ player.profile_image }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<h2>Player Campaigns</h2>
+<div class="player-games">
+    {% for campaign in player_campaigns %}
+        <div class="campaign-card">
+            <h3>{{ campaign.name }}</h3>
+            <h4>GM: {{ campaign.gm }}</h4>
+            <p>{{ campaign.system }}</p>
+            <p>Next Game:</p>
+            <p>{{ campaign.next_game }}</p>
+            <p>Players</p>
+            <div class="player-pics">
+                {% for player in campaign.players %}
+                    {{ player.profile_image }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

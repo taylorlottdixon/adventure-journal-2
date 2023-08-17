@@ -1,6 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1></h1>
+<div class="notes-section">
+    <h1>{{ campaign.name }}</h1>
+    <div class="action-btns">
+        <button>New Category</button>
+        <button>Edit Campaign</button>
+    </div>
+    {% for category in campaign.categories %}
+        <div class="notes-category">
+            <h2>{{ category.name }}</h2>
+            <a href="{% url 'note_categories_create' campaign.id %}">plus sign</a>
+            {% for note in category.notes %}
+                <a href="{% url 'notes_detail' note.id %}" class="note-link">{{ note.name }}</a>
+                {% if note.shared == True %}
+                    {% comment %} shared icon here {% endcomment %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+{% if user == campaign.gm %}
+    <div class="player-section">
+        <h2>Player Characters</h2>
+        {% for pc in pcs %}
+            <a href="{% url 'pcs_detail' pc.id %}" class="pc-card">
+                <img href="{{ pc.player_img }}">
+                <h3>{{ pc.name }}</h3>
+                <div class="quick-stats">
+                    <h5>HP</h5>
+                    <p>{{ pc.hp_current }}</p>
+                    <h5>Max</h5>
+                    <p>{{ pc.hp_max }}</p>
+                    <h5>AC</h5>
+                    <p>{{ pc.armor_class }}</p>
+                    <h5>DC</h5>
+                    <p>{{ pc.save_dc }}</p>
+                </div>
+                <div class="secret-roller">
+                    {% comment %} dice rollers for secret rolls
+                    <h5>Stealth</h5>
+                    <a></a>
+                    <h5>Perception</h5>
+                    <a></a> 
+                    {% endcomment %}
+                </div>
+            </a>
+        {% endfor %}
+        {% comment %} <button> to invite new player to campaign {% endcomment %}
+    </div>
+{% else %}
+    <div class="gm-shared-notes"></div>
+{% endif %}
 
 {% endblock %}
