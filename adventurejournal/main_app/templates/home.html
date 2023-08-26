@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1></h1>
+<h1>Welcome, Adventurer!</h1>
+<h3>Are you here to weave a tale or join an adventuring party?</h3>
+
+{% if user.is_authenticated %}
+{%else%}
+    <h3>You must register with the Archivist before moving forward!</h3>
+    <br>
+    <a href="{% url 'login' %}" class="login">Log In</a>
+    <br>
+    <a href="{% url 'signup' %}" class="signup">Sign Up</a>
+{% endif %}
 
 {% endblock %}
